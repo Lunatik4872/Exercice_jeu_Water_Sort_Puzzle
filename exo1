@@ -1,0 +1,52 @@
+$C = [vert, orange, vide]
+$Nombre_tube = 3
+$K = 1
+$Nombre_etage = 4
+$ETATS = [0..$K]
+
+p(0,1,1,vert)
+p(0,1,2,orange)
+p(0,1,3,vert)
+p(0,1,4,orange)
+p(0,2,1,orange)
+p(0,2,2,vert)
+p(0,2,3,orange)
+p(0,2,4,vert)
+p(0,3,1,vert)
+p(0,3,2,vide)
+
+;; Un etage contien une couleur au minimum
+
+bigand $i in $ETATS:
+	bigand $t in [1..$Nombre_tube]: 
+		bigand $e in [1..$Nombre_etage]: 
+			bigor $c in $C:
+				p($i,$t,$e,$c)
+			end
+		end
+	end
+end
+
+;; Un etage contien une couleur au maximum 
+
+bigand $i in $ETATS:
+	bigand $t in [1..$Nombre_tube]: 
+		bigand $e in [1..$Nombre_etage]: 
+			bigand $c1 in $C:
+				bigand $c2 in $C when $c1 != $c2: 
+					not(p($i,$t,$e,$c1) and p($i,$t,$e,$c2))
+				end
+			end
+		end
+	end
+end
+
+;; Regarde si un etage est vide si c'est le cas alors tout ceux au dessus le sont aussi
+
+bigand $i in $ETATS :
+	bigand $t in [1..$Nombre_tube]: 
+		bigor $e in [1..$Nombre_etage-1]:
+			p($i,$t,$e,vide) and p($i,$t,$e+1,vide)
+		end
+	end
+end
