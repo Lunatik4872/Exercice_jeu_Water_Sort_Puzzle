@@ -17,7 +17,6 @@ p(0,3,2,vide)
 p(0,3,3,vide)
 p(0,3,4,vide)
 
-
 ;; Un etage contien une couleur au minimum
 
 bigand $i in $ETATS:
