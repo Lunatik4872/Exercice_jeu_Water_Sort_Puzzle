@@ -62,7 +62,7 @@ bigand $i in $ETATS :
 			bigor $tdest in [1..$Nombre_tube] when $tdest != $tscr:
 				bigor $edest in [1..$Nombre_etage] :
 					bigor $c in $C :
-						(not p($i-1,$tscr,$escr,vide)) and p($i-1,$tdest,$edest,vide) and ((p($i-1,$tdest,$edest-1,$c) and p($i-1,$tscr,$escr,$c)))
+						((not p($i-1,$tscr,$escr,vide)) and p($i-1,$tdest,$edest,vide) and ((p($i-1,$tdest,$edest-1,$c) and p($i-1,$tscr,$escr,$c)))) and (p($i,$tscr,$escr,vide) and p($i,$tdest,$edest,$c))                                                                                                 
 					end 
 				end
 			end
