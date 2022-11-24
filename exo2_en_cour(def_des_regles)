@@ -1,4 +1,4 @@
-$C = [vert, orange,vide]
+w$C = [vert, orange,vide]
 $Nombre_tube = 3
 $K = 3
 $Nombre_etage = 4
@@ -57,12 +57,14 @@ end
 ;; Etat verification de la fonction verser
 
 bigand $i in $ETATS :
-	bigor $tscr in [1..$Nombre_tube]:
+	bigor $tscr in [1..$Nombre_tube] :
 		bigor $escr in [1..$Nombre_etage] :
 			bigor $tdest in [1..$Nombre_tube] when $tdest != $tscr:
 				bigor $edest in [1..$Nombre_etage] :
-					bigor $c in $C :
-						((not p($i-1,$tscr,$escr,vide)) and p($i-1,$tdest,$edest,vide) and ((p($i-1,$tdest,$edest-1,$c) <=> p($i-1,$tscr,$escr,$c)))) and (p($i,$tscr,$escr,vide) and p($i,$tdest,$edest,$c))                                                                                                 
+					bigor $edest2 in [2..$Nombre_etage-1] when $edest2 == $edest :
+						bigand $c in $C :
+							not p($i-1,$tscr,$escr,vide) and p($i-1,$tdest,$edest,vide) and ((p($i-1,$tdest,$edest2-1,$c) <=> p($i-1,$tscr,$escr,$c))) => p($i,$tscr,$escr,vide) and p($i,$tdest,$edest,$c) and p($i,$tdest,$edest2+1,vide)                
+						end                                                                               
 					end 
 				end
 			end
