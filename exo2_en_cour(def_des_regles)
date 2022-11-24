@@ -3,6 +3,7 @@ $Nombre_tube = 3
 $K = 3
 $Nombre_etage = 4
 $ETATS = [1..$K]
+$ETAGE = [1..$Nombre_etage]
 
 p(0,1,1,vert)
 p(0,1,2,orange)
@@ -56,12 +57,12 @@ end
 ;; Etat verification de la fonction verser
 
 bigand $i in $ETATS :
-	bigand $tscr in [1..$Nombre_tube]:
-		bigand $escr in [1..$Nombre_etage] :
-			bigand $tdest in [1..$Nombre_tube]:
-				bigand $edest in [1..$Nombre_etage] :
-					bigand $c in $C :
-						not(p($i-1,$tscr,$escr,vide)) and p($i-1,$tdest,$edest,vide) and (p($i-1,$tscr,$escr,$c) <=> p($i-1,$tdest,$edest-1,$c)) => p($i,$tscr,$escr,vide) and p($i,$tdest,$edest,$c)
+	bigor $tscr in [1..$Nombre_tube]:
+		bigor $escr in [1..$Nombre_etage] :
+			bigor $tdest in [1..$Nombre_tube] when $tdest != $tscr:
+				bigor $edest in [1..$Nombre_etage] :
+					bigor $c in $C :
+						(not p($i-1,$tscr,$escr,vide)) and p($i-1,$tdest,$edest,vide) and ((p($i-1,$tdest,$edest-1,$c) and p($i-1,$tscr,$escr,$c)))
 					end 
 				end
 			end
