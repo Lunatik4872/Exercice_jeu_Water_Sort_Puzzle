@@ -1,4 +1,4 @@
-w$C = [vert, orange,vide]
+$C = [vert, orange,vide]
 $Nombre_tube = 3
 $K = 3
 $Nombre_etage = 4
