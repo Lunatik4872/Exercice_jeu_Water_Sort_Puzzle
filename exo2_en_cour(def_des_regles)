@@ -20,7 +20,7 @@ p(0,3,4,vide)
 
 ;; Un etage contien une couleur au minimum
 
-bigand $i in $ETATS:
+bigand $i in [0..$K]:
 	bigand $t in [1..$Nombre_tube]: 
 		bigand $e in [1..$Nombre_etage]: 
 			bigor $c in $C:
@@ -32,7 +32,7 @@ end
 
 ;; Un etage contien une couleur au maximum 
 
-bigand $i in $ETATS:
+bigand $i in [0..$K]:
 	bigand $t in [1..$Nombre_tube]: 
 		bigand $e in [1..$Nombre_etage]: 
 			bigand $c1 in $C:
@@ -46,7 +46,7 @@ end
 
 ;; Regarde si un etage est vide si c'est le cas alors tout ceux au dessus le sont aussi
 
-bigand $i in $ETATS :
+bigand $i in [0..$K] :
 	bigand $t in [1..$Nombre_tube]: 
 		bigand $e in [1..$Nombre_etage-1]:
 			p($i,$t,$e,vide) => p($i,$t,$e+1,vide)
@@ -57,14 +57,12 @@ end
 ;; Etat verification de la fonction verser
 
 bigand $i in $ETATS :
-	bigor $tscr in [1..$Nombre_tube] :
-		bigor $escr in [1..$Nombre_etage] :
-			bigor $tdest in [1..$Nombre_tube] when $tdest != $tscr:
-				bigor $edest in [1..$Nombre_etage] :
-					bigor $edest2 in [2..$Nombre_etage-1] when $edest2 == $edest :
-						bigand $c in $C :
-							not p($i-1,$tscr,$escr,vide) and p($i-1,$tdest,$edest,vide) and ((p($i-1,$tdest,$edest2-1,$c) <=> p($i-1,$tscr,$escr,$c))) => p($i,$tscr,$escr,vide) and p($i,$tdest,$edest,$c) and p($i,$tdest,$edest2+1,vide)                
-						end                                                                               
+	bigand $tscr in [1..$Nombre_tube] :
+		bigand $escr in [1..$Nombre_etage] :
+			bigand $tdest in [1..$Nombre_tube] when $tdest != $tscr:
+				bigand $c in $C :
+				 	bigor $edest in [1..$Nombre_etage] :
+						not((not p($i-1,$tscr,$escr,vide) and p($i-1,$tdest,$edest,vide)) => ((p($i,$tscr,$escr,vide) and p($i,$tdest,$edest,$c)))) => ((p($i,$tscr,$escr,$c) <=> p($i-1,$tscr,$escr,$c)) and (p($i,$tdest,$edest,$c) <=> p($i-1,$tdest,$edest,$c)))                                                                     
 					end 
 				end
 			end
