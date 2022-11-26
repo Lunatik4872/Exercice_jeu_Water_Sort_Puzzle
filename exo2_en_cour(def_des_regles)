@@ -57,12 +57,12 @@ end
 ;; Etat verification de la fonction verser
 
 bigand $i in $ETATS :
-	bigand $tscr in [1..$Nombre_tube] :
-		bigand $escr in [1..$Nombre_etage] :
-			bigand $tdest in [1..$Nombre_tube] when $tdest != $tscr:
-				bigand $c in $C :
-				 	bigor $edest in [1..$Nombre_etage] :
-						not((not p($i-1,$tscr,$escr,vide) and p($i-1,$tdest,$edest,vide)) => ((p($i,$tscr,$escr,vide) and p($i,$tdest,$edest,$c)))) => ((p($i,$tscr,$escr,$c) <=> p($i-1,$tscr,$escr,$c)) and (p($i,$tdest,$edest,$c) <=> p($i-1,$tdest,$edest,$c)))                                                                     
+	bigand $tscr in [1..$Nombre_tube]  :
+		bigor $tdest in [1..$Nombre_tube] when $tdest != $tscr:
+			bigand $edest in [1..$Nombre_etage] :	
+				bigor $escr in [1..$Nombre_etage] :
+					bigor $c in $C :									
+						((not p($i-1,$tscr,$escr,vide) and p($i-1,$tdest,$edest,vide)) => ((p($i,$tscr,$escr,vide) and p($i,$tdest,$edest,$c)))) xor ((p($i,$tscr,$escr,$c) <=> p($i-1,$tscr,$escr,$c)) and (p($i,$tdest,$edest,$c) <=> p($i-1,$tdest,$edest,$c)))                                                                     
 					end 
 				end
 			end
