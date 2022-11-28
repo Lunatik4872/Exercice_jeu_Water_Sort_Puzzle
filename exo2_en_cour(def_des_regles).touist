@@ -62,7 +62,7 @@ bigand $i in $ETATS :
 			bigand $escr in [1..$Nombre_etage] :
 				bigand $edest in [1..$Nombre_etage] :
 					bigand $c in $C :
-						verser($i,$tscr,$escr,$tdest,$edest,$c) => p($i-1,$tscr,$escr,$c)                                    
+						verser($i,$tscr,$escr,$tdest,$edest,$c) => p($i-1,$tscr,$escr,$c) ;; On regarde si à l'etat i-1 le tube source pocede une couleur à l'etage soucre                                    
 					end 
 				end
 			end
@@ -76,7 +76,7 @@ bigand $i in $ETATS :
 			bigand $escr in [1..$Nombre_etage] :
 				bigand $edest in [1..$Nombre_etage] :
 					bigand $c in $C :
-						verser($i,$tscr,$escr,$tdest,$edest,$c) => p($i-1,$tdest,$edest,vide)                                    
+						verser($i,$tscr,$escr,$tdest,$edest,$c) => p($i-1,$tdest,$edest,vide) ;; On regarde si l'etage destination du tube destination est vide                       
 					end 
 				end
 			end
@@ -90,7 +90,7 @@ bigand $i in $ETATS :
 			bigand $escr in [1..$Nombre_etage] :
 				bigand $edest in [1..$Nombre_etage] :
 					bigand $c in $C :
-						verser($i,$tscr,$escr,$tdest,$edest,$c) => (p($i-1,$tdest,$edest-1,$c))                               
+						verser($i,$tscr,$escr,$tdest,$edest,$c) => (p($i-1,$tdest,$edest-1,$c)) ;; On verifie que l'étage en dessous de l'etage destination contienne la meme couleur                            
 					end 
 				end
 			end
@@ -104,7 +104,7 @@ bigand $i in $ETATS :
 			bigand $escr in [1..$Nombre_etage] :
 				bigand $edest in [1..$Nombre_etage] :
 					bigand $c in $C :
-						p($i,$tdest,$edest,$c) and p($i,$tscr,$escr,vide) => verser($i,$tscr,$escr,$tdest,$edest,$c)                                   
+						p($i,$tdest,$edest,$c) and p($i,$tscr,$escr,vide) => verser($i,$tscr,$escr,$tdest,$edest,$c) ;; On attribut la couleur à sont nouvelle emplacement et rend vide un etage                                  
 					end 
 				end
 			end
